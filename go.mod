@@ -1,3 +1,3 @@
-module conversao-escala-termometrica
+module Formacao-Go-Developer-DIO
 
 go 1.21
