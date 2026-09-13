@@ -1,96 +1,170 @@
-# Conversão de Escala Termométrica em GO
+# Exercícios em Go
 
-Um projeto prático que demonstra a sintaxe essencial do GO através da implementação de um algoritmo de conversão de temperaturas entre escalas diferentes.
+Repositório com exercícios desenvolvidos durante o estudo da linguagem Go, acompanhando minha formação em Go Developer.
 
-## 📋 Descrição do Desafio
+Os exercícios passam por conceitos fundamentais da linguagem, estruturas de controle, funções, concorrência, API REST e testes automatizados com BDD.
 
-Este é um desafio proposto pela **[DIO - Digital Innovation One](https://www.dio.me/)** com o objetivo de:
+## Projetos
 
-- Explorar a sintaxe essencial do GO
-- Criar um primeiro algoritmo prático
-- Desafiar a lógica de programação
-- Colocar em prática os comandos do core do GO
-
-## 🎯 Objetivo
-
-Desenvolver um programa em GO que realize conversão de temperaturas, especificamente convertendo a temperatura do ponto de ebulição da água de Kelvin para Celsius, aplicando conceitos fundamentais da linguagem.
-
-## 🏗️ Estrutura do Projeto
-
-```
-conversao-escala-termometrica-exe-go/
-├── README.md                    # Este arquivo
-├── go.mod                       # Configuração do módulo GO
-└── ebulição/
-    └── main.go                  # Código principal do programa
-```
-
-## 📝 Conteúdo Principal
-
-### `ebulição/main.go`
-
-O arquivo contém:
-
-- **Constante**: `pontoEbulicaoAguaKelvin` - temperatura em Kelvin (373.0 K)
-- **Função**: `kelvinParaCelsius()` - converte temperatura de Kelvin para Celsius
-- **Função**: `main()` - executa o programa e exibe os resultados formatados
-
-**Fórmula utilizada:**
-```
-Celsius = Kelvin - 273
-```
-
-## 🚀 Como Executar
-
-### Pré-requisitos
-
-- GO 1.21 ou superior instalado
-- Terminal/CMD com acesso ao seu ambiente
-
-### Executando o programa
-
-Na raiz do projeto, execute:
-
-```bash
-go run ebulição/main.go
-```
-
-Ou dentro do diretório `ebulição`:
-
-```bash
-cd ebulição
-go run main.go
-```
-
-### Saída esperada
-
-```
-Ponto de ebulição da água
-Kelvin:  373.0 K
-Celsius: 100.0 °C
-```
-
-## 💡 Conceitos Aprendidos
-
-- ✅ Declaração de pacotes (`package main`)
-- ✅ Importação de bibliotecas (`import "fmt"`)
-- ✅ Declaração de constantes (`const`)
-- ✅ Definição de funções com parâmetros e retorno
-- ✅ Uso da função `fmt.Printf()` para formatação de saída
-- ✅ Operações aritméticas simples
-- ✅ Tipos numéricos em GO (float64)
-
-
-## 📚 Referências
-
-- [Documentação oficial de GO](https://golang.org/doc/)
-- [A Tour of Go](https://tour.golang.org/)
-- [DIO - Digital Innovation One](https://www.dio.me/)
-
-## 📄 Licença
-
-Este projeto foi desenvolvido para fins educacionais.
+| Projeto                                                            | O que exercita                        |
+| ------------------------------------------------------------------ | ------------------------------------- |
+| [Ponto de Ebulição da Água](#ponto-de-ebulição-da-água)            | Funções, constantes e tipos numéricos |
+| [Divisíveis por 3](#divisíveis-por-3)                              | Laço `for` e operador módulo          |
+| [Pin Pan](#pin-pan)                                                | `switch` e estruturas condicionais    |
+| [Ping Pong](#ping-pong-concorrência)                               | Goroutines e canais (`chan`)          |
+| [API REST — Cadastro de Clientes](#api-rest--cadastro-de-clientes) | HTTP, JSON, pacotes e `sync.Mutex`    |
+| [Calculadora](#calculadora)                                        | Testes unitários e BDD com Gherkin    |
 
 ---
 
-**Desenvolvido com ❤️ como parte do programa de formação da DIO**
+## Ponto de Ebulição da Água
+
+Exercício que converte a temperatura de ebulição da água de Kelvin para graus Celsius, utilizando a fórmula:
+
+```text
+C = K - 273
+```
+
+📂 [`ebulição`](./ebulição)
+
+Para executar:
+
+```bash
+go run ./ebulição
+```
+
+---
+
+## Divisíveis por 3
+
+Programa que percorre os números de 1 a 100 e exibe apenas aqueles que são divisíveis por 3.
+
+A verificação utiliza o operador `%` (módulo) para verificar se o resto da divisão por 3 é igual a zero.
+
+📂 [`problemas-numericos`](./problemas-numericos)
+
+---
+
+## Pin Pan
+
+Variação do clássico FizzBuzz.
+
+O programa percorre os números de 1 a 100 e:
+
+* imprime `Pin` para múltiplos de 3;
+* imprime `Pan` para múltiplos de 5;
+* imprime `Pin Pan` para múltiplos de 3 e 5;
+* imprime o próprio número nos demais casos.
+
+A implementação utiliza `switch`, avaliando primeiro a condição mais específica — múltiplo de 15 — antes das condições mais genéricas.
+
+📂 [`problemas-numericos`](./problemas-numericos)
+
+---
+
+## Ping Pong (concorrência)
+
+Programa que imprime `ping` e `pong` alternadamente utilizando duas goroutines coordenadas por canais (`chan`).
+
+Cada goroutine aguarda um sinal pelo canal antes de imprimir sua palavra e, em seguida, sinaliza a outra goroutine. Dessa forma, a alternância é controlada sem a utilização de locks (`Mutex`).
+
+Um canal adicional é utilizado para sinalizar à função principal que a execução terminou.
+
+📂 [`pingpong`](./pingpong)
+
+Para executar:
+
+```bash
+go run ./pingpong
+```
+
+---
+
+## API REST — Cadastro de Clientes
+
+API REST desenvolvida em Go para cadastro de clientes de uma empreendedora do ramo de doceria.
+
+O projeto utiliza o pacote [`gorilla/mux`](https://github.com/gorilla/mux) para roteamento HTTP e mantém os dados em memória utilizando um `map`, protegido por `sync.Mutex` para permitir acesso concorrente com segurança.
+
+A API implementa as operações de CRUD:
+
+| Método   | Rota             | Ação                            |
+| -------- | ---------------- | ------------------------------- |
+| `POST`   | `/clientes`      | Cadastra um novo cliente        |
+| `GET`    | `/clientes`      | Lista todos os clientes         |
+| `GET`    | `/clientes/{id}` | Busca um cliente pelo ID        |
+| `PUT`    | `/clientes/{id}` | Atualiza os dados de um cliente |
+| `DELETE` | `/clientes/{id}` | Remove um cliente               |
+
+📂 [`api-rest`](./api-rest)
+
+Para executar:
+
+```bash
+go run ./api-rest
+```
+
+---
+
+## Calculadora
+
+Implementação de uma calculadora com as quatro operações básicas:
+
+* soma;
+* subtração;
+* multiplicação;
+* divisão.
+
+O projeto possui dois tipos de testes automatizados sobre o mesmo código:
+
+1. **Testes unitários tradicionais**, utilizando o pacote de testes do Go;
+2. **Testes BDD**, utilizando cenários escritos em Gherkin e executados com [Godog](https://github.com/cucumber/godog), uma implementação de Cucumber para Go.
+
+Os cenários BDD utilizam a estrutura:
+
+```text
+Dado → Quando → Então
+```
+
+e estão escritos em português.
+
+📂 [`calculadora/calculadora.go`](./calculadora/calculadora.go)
+📂 [`calculadora/calculadora_test.go`](./calculadora/calculadora_test.go)
+📂 [`calculadora/features/calculadora.feature`](./calculadora/features/calculadora.feature)
+
+Para executar os testes:
+
+```bash
+go test ./calculadora/... -v
+```
+
+Para executar todos os testes do repositório:
+
+```bash
+go test ./... -v
+```
+
+---
+
+## Tecnologias e conceitos estudados
+
+* Go
+* Funções
+* Constantes
+* Tipos numéricos
+* Estruturas condicionais
+* `for`
+* `switch`
+* Operador módulo (`%`)
+* Goroutines
+* Canais (`chan`)
+* `sync.Mutex`
+* HTTP
+* JSON
+* REST API
+* Organização em pacotes
+* Testes unitários
+* BDD
+* Gherkin
+* Godog
+* `go test`
